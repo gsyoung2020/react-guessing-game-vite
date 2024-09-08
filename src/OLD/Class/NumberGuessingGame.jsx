@@ -13,29 +13,35 @@ function getRandomNumber() {
 
 const MAX_ATTEMPTS = 5;
 
-function NumberGuessingGame(props) {
-  const [numberToGuess, setnumberToGuess] = useState(
-    getRandomNumber()
-  );
-  const [numberOfGuesses, setnumberOfGuesses] = useState(0);
-  const [latestGuess, setlatestGuess] = useState(null);
+// change to a function
+
+// Steps for refactoring Class Components to Functional Components:
+// 1. Create new empty functional component
+// 2. render method -> return
+// 3. props -> props
+// 4. this.state -> useState() (remember to import useState)
+// 5. handlerMethods -> handlerFunctions
+// 6. Ensure all this's are gone and also this.state's
+// 7. Ensure all setStates are replaced with individual useState setters
+// 8. Comment out old class component and rename new func component with same name
+// 9. Test it out and make sure it works!
+
+function NumberGuessingGame() {
+  const [numberToGuess, setNumbertoguess] = useState(getRandomNumber);
+  const [numberOfGuesses, setNumberOfGuesses] = useState(0);
+  const [latestGuess, setLatestGuess] = useState(null);
 
   function handleGuess(guess) {
-    setlatestGuess(guess);
-    //explict with the return in brackets as it allows for multi-line usage
-    setnumberOfGuesses((numberOfGuesses) => {
-      return numberOfGuesses + 1;
-    });
-    /*
-    // implict if it only needs to be a single line, no return or brackets needed
-    setnumberOfGuesses((numberOfGuesses) => numberOfGuesses + 1)
-    */
+    setLatestGuess(guess);
+    setNumberOfGuesses((numberOfGuesses) => numberOfGuesses + 1);
   }
+
   function handleReset() {
-    setnumberOfGuesses(getRandomNumber());
-    setnumberToGuess(0);
-    setlatestGuess(null);
+    setNumbertoguess(getRandomNumber);
+    setNumberOfGuesses(0);
+    setLatestGuess(null);
   }
+
   const isCorrectGuess = latestGuess === numberToGuess;
 
   const isGameOver =
@@ -63,10 +69,11 @@ function NumberGuessingGame(props) {
   );
 }
 
-class NumberGuessingGameOld extends Component {
+class NumberGuessingGameOLD extends Component {
   constructor(props) {
     super(props);
 
+    // need to create an useState for each
     this.state = {
       numberToGuess: getRandomNumber(),
       numberOfGuesses: 0,
@@ -82,6 +89,7 @@ class NumberGuessingGameOld extends Component {
   }
 
   handleGuess(guess) {
+    //this is where you use the Setter
     this.setState({
       latestGuess: guess,
       numberOfGuesses: this.state.numberOfGuesses + 1,
@@ -89,6 +97,7 @@ class NumberGuessingGameOld extends Component {
   }
 
   handleReset() {
+    //this is where you use the Setter
     this.setState({
       numberToGuess: getRandomNumber(),
       numberOfGuesses: 0,
